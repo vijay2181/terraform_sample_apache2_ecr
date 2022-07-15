@@ -1,0 +1,73 @@
+AWS ECR:-
+========
+we can give permissions in two ways:-
+1.create a user and give him permissions to pull and push images from ecr 
+2.create a role and give policies(permissions) to pull and push images from ecr
+- for aws instances, always we need to give instance level permissions(role), it is a good practise
+
+
+1.creating user and giving permissions:-
+=========================================
+- in your aws account, create a user "ecr-pull-push"
+- with that user we will login to ecr registry(aws account) and that user has required permissions(AmazonEC2ContainerRegistryFullAccess) 
+- that credentials(access and secrect key) we have to add in .aws/config as "docker" in us-west-2
+
+even if we have user level access or instance level access(role), we need to do registry login for every 8 hours
+
+
+vi .aws/config
+[profile docker]
+aws_access_key_id=
+aws_secret_access_key=
+region=
+
+aws ecr describe-repositories --profile docker
+aws --profile docker --region us-west-2 ecr get-login --no-include-email |bash
+
+BUILDING IMAGE AND PUSHING TO ECR:-
+====================================
+vi Dockerfile
+
+FROM ubuntu
+RUN apt update
+RUN apt install -y  apache2
+RUN apt install  apache2-utils
+RUN echo "Hi there, Iam a GEEK" | tee /var/www/html/index.html
+RUN apache2ctl start
+RUN apt clean 
+EXPOSE 80 CMD ["apache2ctl", "-D", "FOREGROUND"]
+------------------------------------------------------------------------------
+docker build -t vijay:1.0 .                          ---> builds image
+
+docker run -itd --name apache2 -p 80:80 vijay:1.0    ---> starts container 
+
+<ipaddress>:80                                       ---> to access the page
+-------------------------------------------------------------------------------
+
+docker images    ---> you will get ID 
+
+docker tag e9ae3c220b23 aws_account_id.dkr.ecr.region.amazonaws.com/my-repository:tag
+docker tag f131754cf 96141723.dkr.ecr.us-west-2.amazonaws.com/vijay-first-repo:1.0
+
+docker push aws_account_id.dkr.ecr.region.amazonaws.com/my-repository:tag
+docker pull 96141723.dkr.ecr.us-west-2.amazonaws.com/vijay-first-repo:1.0
+
+
+2.Creating a role with terraform and assigning to ec2-instance on the fly:-
+===========================================================================
+- use terraform to create a role for ECR
+- login to instance 
+
+aws ecr describe-repositories --region=us-west-2
+aws --region us-west-2 ecr get-login --no-include-email |bash
+docker pull 96141723.dkr.ecr.us-west-2.amazonaws.com/vijay-first-repo:apache2
+docker run -itd --name vijay -p 80:80 96141723.dkr.ecr.us-west-2.amazonaws.com/vijay-first-repo:apache2
+------------------------------------------------------------------------------------------------------------------
+
+- if we want to do certain tasks after instance is booted, then we need to use "provisioners" in terraform
+  provisioner "remote-exec"
+  
+- you can change the deafault values with
+
+terraform plan -var="ecr-repo=vijay-first-repo"  -var="ecr-repo-tag=apache2"
+terraform apply -var="ecr-repo=vijay-first-repo"  -var="ecr-repo-tag=apache2"
