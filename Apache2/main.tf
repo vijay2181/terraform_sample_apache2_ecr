@@ -1,6 +1,6 @@
 provider "aws" {
-  region     = "us-west-2"
-  profile    = "test"
+  region     = var.region
+  profile    = var.profile
 }
 
 resource "aws_instance" "VIJAY-TERRAFORM" {
