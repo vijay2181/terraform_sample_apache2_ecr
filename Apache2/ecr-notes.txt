@@ -34,8 +34,9 @@ RUN apt install -y  apache2
 RUN apt install  apache2-utils
 RUN echo "Hi there, Iam a GEEK" | tee /var/www/html/index.html
 RUN apache2ctl start
-RUN apt clean 
-EXPOSE 80 CMD ["apache2ctl", "-D", "FOREGROUND"]
+RUN apt clean
+EXPOSE 3000
+CMD /usr/sbin/apache2ctl -D FOREGROUND
 ------------------------------------------------------------------------------
 docker build -t vijay:1.0 .                          ---> builds image
 
