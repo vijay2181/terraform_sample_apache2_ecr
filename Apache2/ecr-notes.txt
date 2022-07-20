@@ -61,6 +61,9 @@ docker pull 96141723.dkr.ecr.us-west-2.amazonaws.com/vijay-first-repo:1.0
 
 aws ecr describe-repositories --region=us-west-2
 aws --region us-west-2 ecr get-login --no-include-email |bash
+- if we want to push, we need o configure the profile and push
+aws --profile docker --region us-west-2 ecr get-login --no-include-email |bash
+docker push aws_account_id.dkr.ecr.region.amazonaws.com/my-repository:tag
 docker pull 96141723.dkr.ecr.us-west-2.amazonaws.com/vijay-first-repo:apache2
 docker run -itd --name vijay -p 80:80 96141723.dkr.ecr.us-west-2.amazonaws.com/vijay-first-repo:apache2
 ------------------------------------------------------------------------------------------------------------------
