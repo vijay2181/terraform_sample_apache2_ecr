@@ -40,7 +40,7 @@ CMD /usr/sbin/apache2ctl -D FOREGROUND
 ------------------------------------------------------------------------------
 docker build -t vijay:1.0 .                          ---> builds image
 
-docker run -itd --name apache2 -p 80:80 vijay:1.0    ---> starts container 
+docker run -itd --name apache2 -p 80:3000 vijay:1.0    ---> starts container 
 
 <ipaddress>:80                                       ---> to access the page
 -------------------------------------------------------------------------------
