@@ -35,12 +35,12 @@ RUN apt install  apache2-utils
 RUN echo "Hi there, Iam a GEEK" | tee /var/www/html/index.html
 RUN apache2ctl start
 RUN apt clean
-EXPOSE 3000
+EXPOSE 80
 CMD /usr/sbin/apache2ctl -D FOREGROUND
 ------------------------------------------------------------------------------
 docker build -t vijay:1.0 .                          ---> builds image
 
-docker run -itd --name apache2 -p 80:3000 vijay:1.0    ---> starts container 
+docker run -itd --name apache2 -p 3000:80 vijay:1.0    ---> starts container 
 
 <ipaddress>:80                                       ---> to access the page
 -------------------------------------------------------------------------------
