@@ -1,0 +1,4 @@
+- we need to get into the instance and goto /home/ec2-user/configure
+- run "docker-compose up -d" to build the service container and reverse proxy container
+- goto the target group and check whether it is healthy or not
+- "docker-compose down"
