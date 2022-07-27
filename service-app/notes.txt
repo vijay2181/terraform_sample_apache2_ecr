@@ -1,4 +1,9 @@
 - we need to get into the instance and goto /home/ec2-user/configure
-- run "docker-compose up -d" to build the service container and reverse proxy container
+- chmod 755 /home/ec2-user/configure/*
+- run "sudo docker-compose up -d" to build the service container and reverse proxy container
+- sudo docker ps
+- check whether both containers are running
 - goto the target group and check whether it is healthy or not
+- goto load balancer and access it on browser
+- you should get the page
 - "docker-compose down"
