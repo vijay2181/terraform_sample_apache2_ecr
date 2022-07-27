@@ -1,4 +1,4 @@
-- fill all the required values where ever necessary
+- fill all the required values in variables.tf file and where ever necessary
 - terraform plan and terraform apply
 - we need to get into the instance and goto /home/ec2-user/configure
 - chmod 755 /home/ec2-user/configure/*
