@@ -2,6 +2,10 @@
 ## Virtual Machine Module - Main ##
 ###################################
 
+locals {
+  ec2_subnet_list = [aws_subnet.public-subnet-1.id, aws_subnet.public-subnet-2.id, aws_subnet.public-subnet-3.id]
+}
+
 # Create EC2 Instances
 resource "aws_instance" "vijay-server" {
 
