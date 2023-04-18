@@ -45,6 +45,8 @@ docker run -itd --name apache2 -p 3000:80 vijay:1.0    ---> starts container
 <ipaddress>:80                                       ---> to access the page
 -------------------------------------------------------------------------------
 
+https://aws.plainenglish.io/how-to-push-an-image-to-aws-ecr-b2be848c2ef
+
 docker images    ---> you will get ID 
 
 docker tag e9ae3c220b23 aws_account_id.dkr.ecr.region.amazonaws.com/my-repository:tag
